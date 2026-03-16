@@ -118,7 +118,7 @@ const MyEvents = () => {
                     View
                   </Link>
                   <Link
-                    to={`/edit-event/${event._id}`}
+                    to={`/events/${event._id}/edit`}
                     className="flex-1 bg-blue-600/10 hover:bg-blue-600/20 text-blue-500 text-center py-2 rounded-lg text-sm font-bold transition-all border border-blue-500/20"
                   >
                     Edit

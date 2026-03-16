@@ -9,7 +9,7 @@ const CreateEvent = () => {
   const navigate = useNavigate();
   const { token } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
+  const [initialData, setInitialData] = useState({
     title: '',
     description: '',
     category: 'workshop',
@@ -20,7 +20,7 @@ const CreateEvent = () => {
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setInitialData({ ...initialData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -28,7 +28,7 @@ const CreateEvent = () => {
     setLoading(true);
 
     try {
-      const response = await eventService.createEvent(formData, token);
+      const response = await eventService.createEvent(initialData, token);
       setLoading(false);
       navigate(`/events/${response.data._id}`);
     } catch (err) {
@@ -48,7 +48,7 @@ const CreateEvent = () => {
           </h1>
 
           <EventForm 
-            formData={formData}
+            initialData={initialData}
             handleChange={handleChange}
             handleSubmit={handleSubmit}
             loading={loading}
