@@ -3,32 +3,32 @@ const Event = require('../models/Event');
 // @desc    Create new event
 // @route   POST /api/events
 // @access  Private
-exports.createEvent = async (req, res) => {
+exports.createEvent = async (req, res, next) => {
   try {
     req.body.organizer = req.user.id;
     const event = await Event.create(req.body);
     res.status(201).json({ success: true, data: event });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error' });
+    next(error);
   }
 };
 
 // @desc    Get all events
 // @route   GET /api/events
 // @access  Public
-exports.getEvents = async (req, res) => {
+exports.getEvents = async (req, res, next) => {
   try {
     const events = await Event.find().populate('organizer', 'name email');
     res.status(200).json({ success: true, count: events.length, data: events });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error' });
+    next(error);
   }
 };
 
 // @desc    Get single event
 // @route   GET /api/events/:id
 // @access  Public
-exports.getEventById = async (req, res) => {
+exports.getEventById = async (req, res, next) => {
   try {
     const event = await Event.findById(req.params.id)
       .populate('organizer', 'name email')
@@ -40,14 +40,14 @@ exports.getEventById = async (req, res) => {
 
     res.status(200).json({ success: true, data: event });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error' });
+    next(error);
   }
 };
 
 // @desc    Update event
 // @route   PUT /api/events/:id
 // @access  Private
-exports.updateEvent = async (req, res) => {
+exports.updateEvent = async (req, res, next) => {
   try {
     let event = await Event.findById(req.params.id);
 
@@ -55,12 +55,7 @@ exports.updateEvent = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Event not found' });
     }
 
-    // Logic for authorization moved to checkOrganizer middleware, 
-    // but keeping a safety check here as well
-    if (event.organizer.toString() !== req.user.id) {
-      return res.status(401).json({ success: false, message: 'Not authorized' });
-    }
-
+    // Authorization handled by middleware
     event = await Event.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
@@ -68,14 +63,14 @@ exports.updateEvent = async (req, res) => {
 
     res.status(200).json({ success: true, data: event });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error' });
+    next(error);
   }
 };
 
 // @desc    Delete event
 // @route   DELETE /api/events/:id
 // @access  Private
-exports.deleteEvent = async (req, res) => {
+exports.deleteEvent = async (req, res, next) => {
   try {
     const event = await Event.findById(req.params.id);
 
@@ -83,21 +78,17 @@ exports.deleteEvent = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Event not found' });
     }
 
-    if (event.organizer.toString() !== req.user.id) {
-      return res.status(401).json({ success: false, message: 'Not authorized' });
-    }
-
     await event.deleteOne();
     res.status(200).json({ success: true, data: {} });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error' });
+    next(error);
   }
 };
 
 // @desc    Register for event
 // @route   POST /api/events/:id/register
 // @access  Private
-exports.registerForEvent = async (req, res) => {
+exports.registerForEvent = async (req, res, next) => {
   try {
     const event = await Event.findById(req.params.id);
 
@@ -118,6 +109,6 @@ exports.registerForEvent = async (req, res) => {
 
     res.status(200).json({ success: true, data: event });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error' });
+    next(error);
   }
 };
