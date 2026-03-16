@@ -1,4 +1,4 @@
-import DeleteButton from '../components/DeleteButton';
+import RegisterButton from '../components/RegisterButton';
 
 const EventDetails = () => {
   const { id } = useParams();
@@ -37,10 +37,25 @@ const EventDetails = () => {
     try {
       setRegistering(true);
       const res = await eventService.registerForEvent(id, token);
-      setEvent(res.data);
+      setEvent(res.data.data); // The updated event object
       alert('Successfully registered for the event!');
     } catch (err) {
       alert(err.response?.data?.message || 'Error registering for event');
+    } finally {
+      setRegistering(false);
+    }
+  };
+
+  const handleUnregister = async () => {
+    if (!window.confirm('Are you sure you want to unregister from this event?')) return;
+
+    try {
+      setRegistering(true);
+      const res = await eventService.unregisterFromEvent(id, token);
+      setEvent(res.data.data); // The updated event object
+      alert('You have successfully unregistered.');
+    } catch (err) {
+      alert(err.response?.data?.message || 'Error unregistering from event');
     } finally {
       setRegistering(false);
     }
@@ -145,19 +160,14 @@ const EventDetails = () => {
                     />
                   </div>
                 ) : (
-                  <button
-                    onClick={handleRegister}
-                    disabled={isRegistered || event.attendees.length >= event.capacity || registering}
-                    className={`w-full md:w-auto px-12 py-5 rounded-2xl font-bold text-lg transition-all shadow-xl font-sans ${
-                      isRegistered 
-                        ? 'bg-green-600/20 text-green-500 border border-green-500/50 cursor-default'
-                        : event.attendees.length >= event.capacity
-                        ? 'bg-gray-800 text-gray-500 cursor-not-allowed'
-                        : 'bg-blue-600 hover:bg-blue-700 hover:shadow-blue-500/40 text-white'
-                    }`}
-                  >
-                    {registering ? 'Processing...' : isRegistered ? 'Registered' : event.attendees.length >= event.capacity ? 'Full Capacity' : 'Register Now'}
-                  </button>
+                  <RegisterButton 
+                    isRegistered={isRegistered}
+                    onRegister={handleRegister}
+                    onUnregister={handleUnregister}
+                    loading={registering}
+                    capacityReached={event.attendees.length >= event.capacity}
+                    isOrganizer={isOrganizer}
+                  />
                 )}
                 <p className="mt-4 text-sm text-gray-500 font-sans bg-gray-900/50 px-4 py-2 rounded-full">
                   {event.capacity - event.attendees.length} spots remaining out of {event.capacity}

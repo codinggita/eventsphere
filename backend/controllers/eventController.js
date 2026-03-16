@@ -107,7 +107,44 @@ exports.registerForEvent = async (req, res, next) => {
     event.attendees.push(req.user.id);
     await event.save();
 
-    res.status(200).json({ success: true, data: event });
+    // Re-populate and return
+    const updatedEvent = await Event.findById(req.params.id)
+      .populate('organizer', 'name email')
+      .populate('attendees', 'name email');
+
+    res.status(200).json({ success: true, data: updatedEvent });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Unregister from event
+// @route   DELETE /api/events/:id/register
+// @access  Private
+exports.unregisterFromEvent = async (req, res, next) => {
+  try {
+    const event = await Event.findById(req.params.id);
+
+    if (!event) {
+      return res.status(404).json({ success: false, message: 'Event not found' });
+    }
+
+    if (!event.attendees.includes(req.user.id)) {
+      return res.status(400).json({ success: false, message: 'Not registered for this event' });
+    }
+
+    event.attendees = event.attendees.filter(
+      (attendeeId) => attendeeId.toString() !== req.user.id
+    );
+
+    await event.save();
+
+    // Re-populate and return
+    const updatedEvent = await Event.findById(req.params.id)
+      .populate('organizer', 'name email')
+      .populate('attendees', 'name email');
+
+    res.status(200).json({ success: true, data: updatedEvent });
   } catch (error) {
     next(error);
   }

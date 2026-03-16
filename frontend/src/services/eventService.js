@@ -56,6 +56,17 @@ const registerForEvent = async (id, token) => {
   return response.data;
 };
 
+const unregisterFromEvent = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.delete(`${API_URL}/${id}/register`, config);
+  return response.data;
+};
+
 const eventService = {
   createEvent,
   getEvents,
@@ -64,6 +75,7 @@ const eventService = {
   updateEvent,
   deleteEvent,
   registerForEvent,
+  unregisterFromEvent,
 };
 
 export default eventService;
