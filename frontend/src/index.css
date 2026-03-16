@@ -15,17 +15,11 @@
 
 @layer base {
   body {
-    @apply bg-black text-slate-100 antialiased;
+    @apply bg-[#0a0a0a] text-slate-100 antialiased;
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
   }
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  background-color: #0a0a0a;
 }
 
 .glass-panel {
