@@ -1,10 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import Navbar from '../components/Navbar';
-import eventService from '../services/eventService';
-import LoadingSpinner from '../components/LoadingSpinner';
-import ErrorDisplay from '../components/ErrorDisplay';
+import DeleteButton from '../components/DeleteButton';
 
 const EventDetails = () => {
   const { id } = useParams();
@@ -15,6 +9,7 @@ const EventDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [registering, setRegistering] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const fetchEvent = async () => {
     try {
@@ -52,13 +47,14 @@ const EventDetails = () => {
   };
 
   const handleDelete = async () => {
-    if (!window.confirm('Are you sure you want to delete this event?')) return;
-
     try {
+      setDeleting(true);
       await eventService.deleteEvent(id, token);
       navigate('/events');
     } catch (err) {
       alert(err.response?.data?.message || 'Error deleting event');
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -143,12 +139,10 @@ const EventDetails = () => {
                     >
                       Edit Event
                     </Link>
-                    <button 
-                      onClick={handleDelete}
-                      className="bg-red-900/30 hover:bg-red-900/50 text-red-500 px-8 py-4 rounded-2xl font-bold transition-all border border-red-900/50 font-sans"
-                    >
-                      Delete
-                    </button>
+                    <DeleteButton 
+                      onDelete={handleDelete}
+                      loading={deleting}
+                    />
                   </div>
                 ) : (
                   <button
