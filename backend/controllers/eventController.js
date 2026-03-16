@@ -231,3 +231,26 @@ exports.unregisterFromEvent = async (req, res, next) => {
     next(error);
   }
 };
+// @desc    Get attendees for an event
+// @route   GET /api/events/:id/attendees
+// @access  Private
+exports.getEventAttendees = async (req, res, next) => {
+  try {
+    const event = await Event.findById(req.params.id).populate({
+      path: 'attendees',
+      select: 'name email interests',
+    });
+
+    if (!event) {
+      return res.status(404).json({ success: false, message: 'Event not found' });
+    }
+
+    res.status(200).json({
+      success: true,
+      count: event.attendees.length,
+      data: event.attendees,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

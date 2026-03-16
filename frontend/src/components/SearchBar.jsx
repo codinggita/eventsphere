@@ -21,7 +21,7 @@ const SearchBar = ({ onSearch, initialValue = '' }) => {
         placeholder="Search events by title or description..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="block w-full pl-11 pr-4 py-4 bg-gray-900/40 border border-gray-800 rounded-2xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all duration-300 text-white placeholder-gray-500 font-sans backdrop-blur-sm"
+        className="block w-full pl-11 pr-4 py-4 bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-800 rounded-2xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 font-sans backdrop-blur-sm"
       />
     </div>
   );

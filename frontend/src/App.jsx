@@ -15,73 +15,77 @@ import MyRegistrations from './pages/MyRegistrations'
 import HomePage from './pages/HomePage';
 import SavedEvents from './pages/SavedEvents';
 
+import { ThemeProvider } from './context/ThemeContext'
+
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/events" element={<EventsList />} />
-          <Route path="/events/:id" element={<EventDetails />} />
-          
-          {/* Protected Routes */}
-          <Route 
-            path="/dashboard" 
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/events/create" 
-            element={
-              <ProtectedRoute>
-                <CreateEvent />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/events/:id/edit" 
-            element={
-              <ProtectedRoute>
-                <EditEvent />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/my-events" 
-            element={
-              <ProtectedRoute>
-                <MyEvents />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/my-registrations" 
-            element={
-              <ProtectedRoute>
-                <MyRegistrations />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/saved-events" 
-            element={
-              <ProtectedRoute>
-                <SavedEvents />
-              </ProtectedRoute>
-            } 
-          />
-          
-          {/* Default Route */}
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/events" element={<EventsList />} />
+            <Route path="/events/:id" element={<EventDetails />} />
+            
+            {/* Protected Routes */}
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/events/create" 
+              element={
+                <ProtectedRoute>
+                  <CreateEvent />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/events/:id/edit" 
+              element={
+                <ProtectedRoute>
+                  <EditEvent />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/my-events" 
+              element={
+                <ProtectedRoute>
+                  <MyEvents />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/my-registrations" 
+              element={
+                <ProtectedRoute>
+                  <MyRegistrations />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/saved-events" 
+              element={
+                <ProtectedRoute>
+                  <SavedEvents />
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* Default Route */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
 

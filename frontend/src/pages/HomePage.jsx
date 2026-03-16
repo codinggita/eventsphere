@@ -9,7 +9,7 @@ const HomePage = () => {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white font-sans overflow-x-hidden transition-colors duration-300">
       <Navbar />
       
       {/* Hero Section */}
@@ -21,8 +21,8 @@ const HomePage = () => {
             Seamless Event Discovery
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] max-w-5xl mx-auto">
-            Experience <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">Extraordinary</span> Events.
+          <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] max-w-5xl mx-auto text-gray-900 dark:text-white">
+            Experience <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-500 dark:to-pink-500">Extraordinary</span> Events.
           </h1>
           
           <p className="text-xl text-gray-500 max-w-2xl mx-auto font-medium">
@@ -39,7 +39,7 @@ const HomePage = () => {
             {!user && (
               <button 
                 onClick={() => navigate('/signup')}
-                className="w-full sm:w-auto px-12 py-5 bg-gray-900 border border-gray-800 hover:border-gray-700 text-white rounded-2xl font-bold text-lg transition-all hover:bg-gray-800"
+                className="w-full sm:w-auto px-12 py-5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 text-gray-900 dark:text-white rounded-2xl font-bold text-lg transition-all hover:bg-gray-50 dark:hover:bg-gray-800"
               >
                 Join EventSphere
               </button>
@@ -57,7 +57,7 @@ const HomePage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Link 
               to="/events?category=workshop" 
-              className="group relative h-64 rounded-3xl overflow-hidden border border-gray-800 bg-gray-900/40 p-10 flex flex-col justify-end transition-all hover:border-blue-500/40"
+              className="group relative h-64 rounded-3xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/40 p-10 flex flex-col justify-end transition-all hover:border-blue-500/40"
             >
               <div className="text-4xl mb-4 group-hover:scale-125 transition-transform">💻</div>
               <h3 className="text-2xl font-black mb-1">Workshops</h3>
@@ -66,7 +66,7 @@ const HomePage = () => {
             
             <Link 
               to="/events?category=hackathon" 
-              className="group relative h-64 rounded-3xl overflow-hidden border border-gray-800 bg-gray-900/40 p-10 flex flex-col justify-end transition-all hover:border-purple-500/40"
+              className="group relative h-64 rounded-3xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/40 p-10 flex flex-col justify-end transition-all hover:border-purple-500/40"
             >
               <div className="text-4xl mb-4 group-hover:scale-125 transition-transform">🚀</div>
               <h3 className="text-2xl font-black mb-1">Hackathons</h3>
@@ -75,7 +75,7 @@ const HomePage = () => {
             
             <Link 
               to="/events?category=conference" 
-              className="group relative h-64 rounded-3xl overflow-hidden border border-gray-800 bg-gray-900/40 p-10 flex flex-col justify-end transition-all hover:border-pink-500/40"
+              className="group relative h-64 rounded-3xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/40 p-10 flex flex-col justify-end transition-all hover:border-pink-500/40"
             >
               <div className="text-4xl mb-4 group-hover:scale-125 transition-transform">🎤</div>
               <h3 className="text-2xl font-black mb-1">Conferences</h3>

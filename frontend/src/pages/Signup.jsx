@@ -53,7 +53,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-black">
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-white dark:bg-black transition-colors duration-300">
       {/* Dynamic Background Elements */}
       <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-brand-600/20 blur-[120px]"></div>
       <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-teal-600/20 blur-[120px]"></div>
@@ -62,8 +62,8 @@ const Signup = () => {
         <div className="glass-panel p-8 rounded-2xl flex flex-col items-center">
           <img src={logo} alt="EventSphere Logo" className="w-16 h-16 object-contain rounded-full shadow-lg border-2 border-brand-500/50 mb-3" />
           <div className="text-center mb-6">
-            <h1 className="text-3xl font-bold text-white mb-2">Create Account</h1>
-            <p className="text-slate-400">Join EventSphere today</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Create Account</h1>
+            <p className="text-gray-500 dark:text-slate-400">Join EventSphere today</p>
           </div>
           
           {error && (
@@ -74,7 +74,7 @@ const Signup = () => {
           
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Full Name</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">Full Name</label>
               <input
                 type="text"
                 name="name"
@@ -87,7 +87,7 @@ const Signup = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Email Address</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">Email Address</label>
               <input
                 type="email"
                 name="email"
@@ -101,7 +101,7 @@ const Signup = () => {
             
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">Password</label>
                 <input
                   type="password"
                   name="password"
@@ -114,7 +114,7 @@ const Signup = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">Confirm</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">Confirm</label>
                 <input
                   type="password"
                   name="confirmPassword"
@@ -128,8 +128,8 @@ const Signup = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">
-                Interests <span className="text-slate-500 font-normal">(comma separated)</span>
+              <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">
+                Interests <span className="text-gray-400 dark:text-slate-500 font-normal">(comma separated)</span>
               </label>
               <input
                 type="text"
@@ -152,9 +152,9 @@ const Signup = () => {
             </button>
           </form>
           
-          <div className="mt-8 text-center text-sm text-slate-400">
+          <div className="mt-8 text-center text-sm text-gray-500 dark:text-slate-400">
             Already have an account?{' '}
-            <Link to="/login" className="text-brand-400 hover:text-brand-300 font-medium">
+            <Link to="/login" className="text-blue-600 dark:text-brand-400 hover:text-blue-500 dark:hover:text-brand-300 font-medium">
               Sign in
             </Link>
           </div>

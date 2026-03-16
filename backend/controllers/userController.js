@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Event = require('../models/Event');
 
 // @desc    Get events created by logged-in user
 // @route   GET /api/users/me/events
@@ -92,10 +93,27 @@ const getSavedEvents = async (req, res, next) => {
   }
 };
 
+// @desc    Connect with a user (Placeholder)
+// @route   POST /api/users/connect/:id
+// @access  Private
+const connectWithUser = async (req, res, next) => {
+  try {
+    const userIdToConnect = req.params.id;
+    // Implementation placeholder: In a real app, this would create a connection request
+    res.status(200).json({ 
+      success: true, 
+      message: `Connection request sent to user ${userIdToConnect}` 
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getMyEvents,
   getMyRegistrations,
   saveEvent,
   unsaveEvent,
-  getSavedEvents
+  getSavedEvents,
+  connectWithUser
 };

@@ -8,6 +8,7 @@ const {
   deleteEvent,
   registerForEvent,
   unregisterFromEvent,
+  getEventAttendees,
 } = require('../controllers/eventController');
 const auth = require('../middleware/auth');
 const checkOrganizer = require('../middleware/checkOrganizer');
@@ -21,6 +22,7 @@ router.route('/:id')
   .put(auth, checkOrganizer, updateEvent)
   .delete(auth, checkOrganizer, deleteEvent);
 
+router.get('/:id/attendees', auth, getEventAttendees);
 router.post('/:id/register', auth, registerForEvent);
 router.delete('/:id/register', auth, unregisterFromEvent);
 

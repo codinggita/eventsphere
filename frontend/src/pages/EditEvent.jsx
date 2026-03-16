@@ -94,7 +94,7 @@ const EditEvent = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white transition-colors duration-300">
       <Navbar />
       
       <main className="max-w-3xl mx-auto px-4 py-12">
