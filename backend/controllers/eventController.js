@@ -18,8 +18,90 @@ exports.createEvent = async (req, res, next) => {
 // @access  Public
 exports.getEvents = async (req, res, next) => {
   try {
-    const events = await Event.find().populate('organizer', 'name email');
-    res.status(200).json({ success: true, count: events.length, data: events });
+    let query;
+
+    // Copy req.query
+    const reqQuery = { ...req.query };
+
+    // Fields to exclude
+    const removeFields = ['select', 'sort', 'page', 'limit', 'keyword'];
+
+    // Loop over removeFields and delete them from reqQuery
+    removeFields.forEach((param) => delete reqQuery[param]);
+
+    // Create query string
+    let queryStr = JSON.stringify(reqQuery);
+
+    // Create operators ($gt, $gte, etc)
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, (match) => `$${match}`);
+
+    // Finding resource
+    query = Event.find(JSON.parse(queryStr));
+
+    // Keyword search (Title & Description)
+    if (req.query.keyword) {
+      query = query.find({
+        $or: [
+          { title: { $regex: req.query.keyword, $options: 'i' } },
+          { description: { $regex: req.query.keyword, $options: 'i' } },
+        ],
+      });
+    }
+
+    // Select Fields
+    if (req.query.select) {
+      const fields = req.query.select.split(',').join(' ');
+      query = query.select(fields);
+    }
+
+    // Sort
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort('-createdAt');
+    }
+
+    // Pagination
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 6;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const total = await Event.countDocuments(JSON.parse(queryStr));
+
+    query = query.skip(startIndex).limit(limit);
+
+    // Executing query
+    const events = await query.populate('organizer', 'name email');
+
+    // Pagination result
+    const pagination = {
+      total,
+      limit,
+      page,
+      totalPages: Math.ceil(total / limit),
+    };
+
+    if (endIndex < total) {
+      pagination.next = {
+        page: page + 1,
+        limit,
+      };
+    }
+
+    if (startIndex > 0) {
+      pagination.prev = {
+        page: page - 1,
+        limit,
+      };
+    }
+
+    res.status(200).json({
+      success: true,
+      count: events.length,
+      pagination,
+      data: events,
+    });
   } catch (error) {
     next(error);
   }

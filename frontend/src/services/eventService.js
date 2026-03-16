@@ -13,8 +13,9 @@ const createEvent = async (eventData, token) => {
   return response.data;
 };
 
-const getEvents = async () => {
-  const response = await axios.get(API_URL);
+const getEvents = async (params = {}) => {
+  const queryParams = new URLSearchParams(params).toString();
+  const response = await axios.get(`${API_URL}?${queryParams}`);
   return response.data;
 };
 
