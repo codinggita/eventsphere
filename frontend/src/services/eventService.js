@@ -59,6 +59,7 @@ const registerForEvent = async (id, token) => {
 const eventService = {
   createEvent,
   getEvents,
+  getAllEvents: getEvents, // Added as requested
   getEventById,
   updateEvent,
   deleteEvent,
