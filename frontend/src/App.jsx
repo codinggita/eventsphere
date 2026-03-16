@@ -10,6 +10,7 @@ import EventDetails from './pages/EventDetails'
 import CreateEvent from './pages/CreateEvent'
 import EditEvent from './pages/EditEvent'
 import MyEvents from './pages/MyEvents'
+import MyRegistrations from './pages/MyRegistrations'
 
 function App() {
   return (
@@ -52,6 +53,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <MyEvents />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/my-registrations" 
+            element={
+              <ProtectedRoute>
+                <MyRegistrations />
               </ProtectedRoute>
             } 
           />

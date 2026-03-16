@@ -6,27 +6,27 @@ import userService from '../services/userService';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorDisplay from '../components/ErrorDisplay';
 
-const MyEvents = () => {
-  const { user, token } = useAuth();
-  const [events, setEvents] = useState([]);
+const MyRegistrations = () => {
+  const { token } = useAuth();
+  const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchMyEvents = async () => {
+  const fetchRegistrations = async () => {
     try {
       setLoading(true);
-      const res = await userService.getMyEvents(token);
-      setEvents(res.data);
+      const res = await userService.getMyRegistrations(token);
+      setRegistrations(res.data);
       setError(null);
     } catch (err) {
-      setError(err.response?.data?.message || 'Error fetching your events');
+      setError(err.response?.data?.message || 'Error fetching your registrations');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchMyEvents();
+    fetchRegistrations();
   }, [token]);
 
   if (loading) {
@@ -42,7 +42,7 @@ const MyEvents = () => {
     return (
       <div className="min-h-screen bg-[#0a0a0a] text-white">
         <Navbar />
-        <ErrorDisplay message={error} retryHandler={fetchMyEvents} />
+        <ErrorDisplay message={error} retryHandler={fetchRegistrations} />
       </div>
     );
   }
@@ -52,39 +52,31 @@ const MyEvents = () => {
       <Navbar />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex justify-between items-center mb-10">
-          <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent font-sans">
-              My Created Events
-            </h1>
-            <p className="text-gray-500 mt-2 font-sans">Manage events you've organized</p>
-          </div>
-          <Link
-            to="/events/create"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-blue-500/10 font-sans"
-          >
-            + Create New
-          </Link>
+        <div className="mb-10">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent font-sans">
+            My Registrations
+          </h1>
+          <p className="text-gray-500 mt-2 font-sans">Events you've signed up for</p>
         </div>
 
-        {events.length === 0 ? (
+        {registrations.length === 0 ? (
           <div className="text-center py-20 bg-gray-900/20 border border-gray-800 rounded-3xl font-sans">
-            <div className="text-5xl mb-4">📅</div>
-            <h3 className="text-xl font-medium text-gray-400 font-sans">You haven't created any events yet</h3>
-            <p className="text-gray-500 mt-2 mb-8 font-sans">Start organizing your first event today!</p>
+            <div className="text-5xl mb-4">🎟️</div>
+            <h3 className="text-xl font-medium text-gray-400 font-sans">No registrations yet</h3>
+            <p className="text-gray-500 mt-2 mb-8 font-sans">Explore upcoming events and join the fun!</p>
             <Link
-              to="/events/create"
+              to="/events"
               className="text-blue-500 hover:underline font-medium font-sans"
             >
-              Create your first event →
+              Browse all events →
             </Link>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {events.map((event) => (
+            {registrations.map((event) => (
               <div
                 key={event._id}
-                className="group bg-gray-900/40 rounded-2xl overflow-hidden border border-gray-800 hover:border-blue-500/30 transition-all flex flex-col font-sans"
+                className="group bg-gray-900/40 rounded-2xl overflow-hidden border border-gray-800 hover:border-green-500/30 transition-all flex flex-col font-sans"
               >
                 <div className="relative h-48">
                   <img
@@ -94,6 +86,9 @@ const MyEvents = () => {
                   />
                   <div className="absolute top-4 right-4 bg-gray-900/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full uppercase border border-gray-700">
                     {event.category}
+                  </div>
+                  <div className="absolute top-4 left-4 bg-green-600 text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase shadow-lg">
+                    REGISTERED
                   </div>
                 </div>
                 
@@ -105,24 +100,22 @@ const MyEvents = () => {
                       {new Date(event.date).toLocaleDateString()}
                     </div>
                     <div className="flex items-center">
+                      <span className="mr-2 opacity-70">📍</span>
+                      {event.location}
+                    </div>
+                    <div className="flex items-center">
                       <span className="mr-2 opacity-70">👤</span>
-                      {event.attendees.length} Attendees
+                      Organizer: {event.organizer?.name || 'Unknown'}
                     </div>
                   </div>
                 </div>
 
-                <div className="p-6 pt-0 flex space-x-3 mt-auto font-sans">
+                <div className="p-6 pt-0 mt-auto font-sans">
                   <Link
                     to={`/events/${event._id}`}
-                    className="flex-1 bg-gray-800 hover:bg-gray-700 text-white text-center py-2 rounded-lg text-sm font-bold transition-all border border-gray-700"
+                    className="block w-full bg-green-600/10 hover:bg-green-600/20 text-green-500 text-center py-3 rounded-xl text-sm font-bold transition-all border border-green-500/20"
                   >
-                    View
-                  </Link>
-                  <Link
-                    to={`/events/${event._id}/edit`}
-                    className="flex-1 bg-blue-600/10 hover:bg-blue-600/20 text-blue-500 text-center py-2 rounded-lg text-sm font-bold transition-all border border-blue-500/20"
-                  >
-                    Edit
+                    View Details
                   </Link>
                 </div>
               </div>
@@ -134,4 +127,4 @@ const MyEvents = () => {
   );
 };
 
-export default MyEvents;
+export default MyRegistrations;
