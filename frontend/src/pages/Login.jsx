@@ -21,14 +21,14 @@ const Login = () => {
       await login(email, password);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed. Please try again.');
+      setError(err.response?.data?.message || err.response?.data?.errors?.[0]?.msg || 'Login failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-black">
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-white dark:bg-black transition-colors duration-300">
       {/* Dynamic Background Elements */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-brand-600/20 blur-[120px]"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/20 blur-[120px]"></div>
@@ -37,8 +37,8 @@ const Login = () => {
         <div className="glass-panel p-8 rounded-2xl flex flex-col items-center">
           <img src={logo} alt="EventSphere Logo" className="w-20 h-20 object-contain rounded-full shadow-lg border-2 border-brand-500/50 mb-4" />
           <div className="text-center mb-6">
-            <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-            <p className="text-slate-400">Sign in to EventSphere</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Welcome Back</h1>
+            <p className="text-gray-500 dark:text-slate-400">Sign in to EventSphere</p>
           </div>
           
           {error && (
@@ -49,7 +49,7 @@ const Login = () => {
           
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5">Email</label>
               <input
                 type="email"
                 value={email}
@@ -62,8 +62,8 @@ const Login = () => {
             
             <div>
               <div className="flex justify-between items-center mb-1.5">
-                <label className="block text-sm font-medium text-slate-300">Password</label>
-                <a href="#" className="text-sm text-brand-400 hover:text-brand-300">Forgot password?</a>
+                <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">Password</label>
+                <a href="#" className="text-sm text-blue-600 dark:text-brand-400 hover:text-blue-500 dark:hover:text-brand-300">Forgot password?</a>
               </div>
               <input
                 type="password"
@@ -86,9 +86,9 @@ const Login = () => {
             </button>
           </form>
           
-          <div className="mt-8 text-center text-sm text-slate-400">
+          <div className="mt-8 text-center text-sm text-gray-500 dark:text-slate-400">
             Don't have an account?{' '}
-            <Link to="/signup" className="text-brand-400 hover:text-brand-300 font-medium">
+            <Link to="/signup" className="text-blue-600 dark:text-brand-400 hover:text-blue-500 dark:hover:text-brand-300 font-medium">
               Create an account
             </Link>
           </div>

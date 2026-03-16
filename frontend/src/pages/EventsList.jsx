@@ -74,7 +74,7 @@ const EventsList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white font-sans">
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white font-sans transition-colors duration-300">
       <Navbar />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -93,7 +93,7 @@ const EventsList = () => {
             />
           </div>
 
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 pt-4 border-t border-gray-800/50">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 pt-4 border-t border-gray-200 dark:border-gray-800/50">
             <CategoryFilter 
               activeCategory={category} 
               onCategoryChange={(val) => updateFilters({ category: val })} 
@@ -110,7 +110,7 @@ const EventsList = () => {
         ) : error ? (
           <ErrorDisplay message={error} retryHandler={fetchEvents} />
         ) : events.length === 0 ? (
-          <div className="text-center py-32 bg-gray-900/20 rounded-3xl border border-gray-800 backdrop-blur-sm">
+          <div className="text-center py-32 bg-gray-50 dark:bg-gray-900/20 rounded-3xl border border-gray-200 dark:border-gray-800 backdrop-blur-sm">
             <div className="text-6xl mb-6 opacity-20">🔎</div>
             <h3 className="text-2xl font-bold text-gray-400 mb-2">No events found</h3>
             <p className="text-gray-500 max-w-md mx-auto">

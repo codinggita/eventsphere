@@ -1,0 +1,28 @@
+/* Responsive refinements */
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 3rem;
+    line-height: 1.1;
+  }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) {
+  /* Simplified for now */
+}
+
+/* Smooth layout transitions */
+.page-transition {
+  animation: fade-in 0.5s ease-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Dark mode overrides for non-tailwind elements if any */
+.dark .glass-effect {
+  background: rgba(17, 24, 39, 0.7);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}

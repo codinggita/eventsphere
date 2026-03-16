@@ -17,7 +17,7 @@ const CategoryFilter = ({ activeCategory, onCategoryChange }) => {
           className={`flex items-center px-6 py-3 rounded-2xl font-bold transition-all duration-300 font-sans border ${
             (activeCategory === cat.id || (activeCategory === '' && cat.id === 'all'))
               ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20'
-              : 'bg-gray-900/40 border-gray-800 text-gray-400 hover:border-gray-700 hover:text-gray-300'
+              : 'bg-white dark:bg-gray-900/40 border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-700 hover:text-gray-900 dark:hover:text-gray-300'
           }`}
         >
           <span className="mr-2">{cat.icon}</span>

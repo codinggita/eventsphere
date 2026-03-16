@@ -36,7 +36,7 @@ const Pagination = ({ pagination, onPageChange }) => {
                   ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20'
                   : p === '...'
                   ? 'border-transparent text-gray-600 cursor-default'
-                  : 'bg-gray-900/40 border-gray-800 text-gray-400 hover:border-blue-500/50 hover:text-blue-500'
+                  : 'bg-white dark:bg-gray-900/40 border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 hover:border-blue-500/50 hover:text-blue-500'
               }`}
             >
               {p}

@@ -31,7 +31,7 @@ const EventCard = ({ event }) => {
   };
 
   return (
-    <div className="group bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all hover:scale-[1.02] flex flex-col font-sans relative">
+    <div className="group bg-white dark:bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 hover:border-blue-500/50 transition-all hover:scale-[1.02] flex flex-col font-sans relative shadow-sm hover:shadow-xl">
       <Link to={`/events/${_id}`} className="block h-48 overflow-hidden relative">
         <img
           src={image || 'https://via.placeholder.com/400x200?text=Event+Image'}

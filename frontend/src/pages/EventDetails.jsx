@@ -1,7 +1,16 @@
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import eventService from '../services/eventService';
+import userService from '../services/userService';
+import Navbar from '../components/Navbar';
+import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorDisplay from '../components/ErrorDisplay';
 import RegisterButton from '../components/RegisterButton';
 import BookmarkButton from '../components/BookmarkButton';
+import DeleteButton from '../components/DeleteButton';
 import CountdownTimer from '../components/CountdownTimer';
-import userService from '../services/userService';
+import AttendeesList from '../components/AttendeesList';
 
 const EventDetails = () => {
   const { id } = useParams();
@@ -15,6 +24,7 @@ const EventDetails = () => {
   const [deleting, setDeleting] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [mutualOnly, setMutualOnly] = useState(false);
 
   const fetchEvent = async () => {
     try {
@@ -100,7 +110,7 @@ const EventDetails = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-white">
+      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white transition-colors duration-300">
         <Navbar />
         <LoadingSpinner />
       </div>
@@ -109,7 +119,7 @@ const EventDetails = () => {
 
   if (error || !event) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-white">
+      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white transition-colors duration-300">
         <Navbar />
         <ErrorDisplay message={error} retryHandler={fetchEvent} />
       </div>
@@ -122,7 +132,7 @@ const EventDetails = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white font-sans transition-colors duration-300">
       <Navbar />
       
       <main className="max-w-4xl mx-auto px-4 py-12">
@@ -235,17 +245,19 @@ const EventDetails = () => {
                 </div>
 
                 <div className="bg-gray-800/20 rounded-3xl p-6 border border-gray-800">
-                  <h3 className="text-sm uppercase tracking-widest text-gray-500 font-bold mb-6 font-sans">Attendees</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-black/40 rounded-2xl p-4 text-center">
-                      <p className="text-3xl font-bold text-blue-500 mb-1">{event.attendees.length}</p>
-                      <p className="text-xs text-gray-500 uppercase tracking-tighter">Joined</p>
-                    </div>
-                    <div className="bg-black/40 rounded-2xl p-4 text-center">
-                      <p className="text-3xl font-bold text-gray-400 mb-1">{event.capacity}</p>
-                      <p className="text-xs text-gray-500 uppercase tracking-tighter">Capacity</p>
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-sm uppercase tracking-widest text-gray-500 font-bold font-sans">Networking</h3>
+                    <div className="flex items-center gap-2">
+                       <span className="text-[10px] text-gray-400 font-bold uppercase">Mutual Only</span>
+                       <button 
+                        onClick={() => setMutualOnly(!mutualOnly)}
+                        className={`w-8 h-4 rounded-full transition-colors relative ${mutualOnly ? 'bg-blue-600' : 'bg-gray-700'}`}
+                       >
+                         <div className={`absolute top-0.5 w-3 h-3 bg-white rounded-full transition-all ${mutualOnly ? 'left-4.5' : 'left-0.5'}`}></div>
+                       </button>
                     </div>
                   </div>
+                  <AttendeesList eventId={id} mutualInterestsOnly={mutualOnly} />
                 </div>
               </div>
             </div>

@@ -13,10 +13,10 @@ const SortDropdown = ({ activeSort, onSortChange }) => {
       <select
         value={activeSort}
         onChange={(e) => onSortChange(e.target.value)}
-        className="block w-full px-4 py-4 bg-gray-900/40 border border-gray-800 rounded-2xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all duration-300 text-white font-sans backdrop-blur-sm appearance-none cursor-pointer"
+        className="block w-full px-4 py-4 bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-800 rounded-2xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all duration-300 text-gray-900 dark:text-white font-sans backdrop-blur-sm appearance-none cursor-pointer"
       >
         {options.map((opt) => (
-          <option key={opt.id} value={opt.id} className="bg-gray-900 text-white">
+          <option key={opt.id} value={opt.id} className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
             Sort by: {opt.label}
           </option>
         ))}
