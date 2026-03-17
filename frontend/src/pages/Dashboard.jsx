@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import logo from '../assets/logo.png';
+import DashboardStats from '../components/DashboardStats';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -12,6 +13,9 @@ const Dashboard = () => {
       <Navbar />
       
       <div className="max-w-7xl mx-auto p-6 md:p-12">
+
+        {/* Dashboard Stats */}
+        <DashboardStats />
 
         {/* Main Content */}
         <div className="grid md:grid-cols-3 gap-6">

@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import userService from '../services/userService';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorDisplay from '../components/ErrorDisplay';
+import EmptyState from '../components/EmptyState';
 
 const MyRegistrations = () => {
   const { token } = useAuth();
@@ -60,17 +61,13 @@ const MyRegistrations = () => {
         </div>
 
         {registrations.length === 0 ? (
-          <div className="text-center py-20 bg-gray-900/20 border border-gray-800 rounded-3xl font-sans">
-            <div className="text-5xl mb-4">🎟️</div>
-            <h3 className="text-xl font-medium text-gray-400 font-sans">No registrations yet</h3>
-            <p className="text-gray-500 mt-2 mb-8 font-sans">Explore upcoming events and join the fun!</p>
-            <Link
-              to="/events"
-              className="text-blue-500 hover:underline font-medium font-sans"
-            >
-              Browse all events →
-            </Link>
-          </div>
+          <EmptyState
+            type="ticket"
+            title="No registrations yet"
+            description="You haven't signed up for any events yet. Explore upcoming events and secure your spot!"
+            actionLabel="Browse Events"
+            onAction={() => window.location.href = '/events'}
+          />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {registrations.map((event) => (

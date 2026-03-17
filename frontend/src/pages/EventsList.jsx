@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import EventCard from '../components/EventCard';
 import eventService from '../services/eventService';
@@ -7,11 +7,13 @@ import SearchBar from '../components/SearchBar';
 import CategoryFilter from '../components/CategoryFilter';
 import SortDropdown from '../components/SortDropdown';
 import Pagination from '../components/Pagination';
-import LoadingSpinner from '../components/LoadingSpinner';
+import LoadingSkeleton from '../components/LoadingSkeleton';
+import EmptyState from '../components/EmptyState';
 import ErrorDisplay from '../components/ErrorDisplay';
 
 const EventsList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -106,23 +108,17 @@ const EventsList = () => {
         </div>
 
         {loading ? (
-          <LoadingSpinner />
+          <LoadingSkeleton count={6} />
         ) : error ? (
           <ErrorDisplay message={error} retryHandler={fetchEvents} />
         ) : events.length === 0 ? (
-          <div className="text-center py-32 bg-gray-50 dark:bg-gray-900/20 rounded-3xl border border-gray-200 dark:border-gray-800 backdrop-blur-sm">
-            <div className="text-6xl mb-6 opacity-20">🔎</div>
-            <h3 className="text-2xl font-bold text-gray-400 mb-2">No events found</h3>
-            <p className="text-gray-500 max-w-md mx-auto">
-              We couldn't find any events matching your current filters. Try adjusting your search term or exploring different categories.
-            </p>
-            <button 
-              onClick={() => setSearchParams({})}
-              className="mt-8 text-blue-500 font-bold hover:text-blue-400 transition-colors"
-            >
-              Clear all filters
-            </button>
-          </div>
+          <EmptyState
+            type="search"
+            title="No events found"
+            description="We couldn't find any events matching your filters. Try adjusting your search or exploring different categories."
+            actionLabel="Clear all filters"
+            onAction={() => setSearchParams({})}
+          />
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">

@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import userService from '../services/userService';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorDisplay from '../components/ErrorDisplay';
+import EmptyState from '../components/EmptyState';
 
 const MyEvents = () => {
   const { user, token } = useAuth();
@@ -68,17 +69,13 @@ const MyEvents = () => {
         </div>
 
         {events.length === 0 ? (
-          <div className="text-center py-20 bg-gray-900/20 border border-gray-800 rounded-3xl font-sans">
-            <div className="text-5xl mb-4">📅</div>
-            <h3 className="text-xl font-medium text-gray-400 font-sans">You haven't created any events yet</h3>
-            <p className="text-gray-500 mt-2 mb-8 font-sans">Start organizing your first event today!</p>
-            <Link
-              to="/events/create"
-              className="text-blue-500 hover:underline font-medium font-sans"
-            >
-              Create your first event →
-            </Link>
-          </div>
+          <EmptyState
+            type="calendar"
+            title="No events created yet"
+            description="You haven't organized any events. Start hosting your first event today!"
+            actionLabel="Create Your First Event"
+            onAction={() => window.location.href = '/events/create'}
+          />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {events.map((event) => (

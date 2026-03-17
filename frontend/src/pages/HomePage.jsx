@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import TrendingEvents from '../components/TrendingEvents';
+import Footer from '../components/Footer';
 import { useAuth } from '../context/AuthContext';
 
 const HomePage = () => {
@@ -44,6 +45,22 @@ const HomePage = () => {
                 Join EventSphere
               </button>
             )}
+          </div>
+
+          {/* Hero Stats */}
+          <div className="flex flex-wrap justify-center gap-8 md:gap-16 pt-12">
+            {[
+              { value: '1,000+', label: 'Events' },
+              { value: '500+', label: 'Hosts' },
+              { value: '10,000+', label: 'Attendees' },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <div className="text-3xl md:text-4xl font-black bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-gray-500 dark:text-gray-400 font-medium mt-1">{stat.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -100,20 +117,7 @@ const HomePage = () => {
         </section>
       </main>
 
-      <footer className="border-t border-gray-900 pt-20 pb-10 px-4">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
-          <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-black text-xl italic italic">E</div>
-            <span className="text-xl font-bold tracking-tighter">EventSphere</span>
-          </div>
-          <p className="text-gray-600 text-sm font-medium">© 2026 EventSphere. All rights reserved.</p>
-          <div className="flex space-x-8 text-sm text-gray-500 font-bold">
-            <Link to="/events" className="hover:text-white transition-colors">Events</Link>
-            <Link to="/about" className="hover:text-white transition-colors">About</Link>
-            <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import userService from '../services/userService';
 import { useAuth } from '../context/AuthContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorDisplay from '../components/ErrorDisplay';
+import EmptyState from '../components/EmptyState';
 
 const SavedEvents = () => {
   const [events, setEvents] = useState([]);
@@ -48,13 +49,13 @@ const SavedEvents = () => {
         ) : error ? (
           <ErrorDisplay message={error} retryHandler={fetchSavedEvents} />
         ) : events.length === 0 ? (
-          <div className="text-center py-32 bg-gray-900/20 rounded-3xl border border-gray-800 backdrop-blur-sm">
-            <div className="text-6xl mb-6 opacity-20">❤️</div>
-            <h3 className="text-2xl font-bold text-gray-400 mb-2">No saved events</h3>
-            <p className="text-gray-500 max-w-md mx-auto">
-              You haven't bookmarked any events yet. Explore events and tap the heart icon to save them for later.
-            </p>
-          </div>
+          <EmptyState
+            type="bookmark"
+            title="No saved events yet"
+            description="You haven't bookmarked any events. Explore events and tap the bookmark icon to save them for later."
+            actionLabel="Explore Events"
+            onAction={() => window.location.href = '/events'}
+          />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {events.map((event) => (
